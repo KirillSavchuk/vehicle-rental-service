@@ -7,6 +7,8 @@ import lv.savchuk.vehicle.rent.model.VehicleRentRateConfig;
 
 import java.util.Map;
 
+import static lv.savchuk.vehicle.rent.enums.AdditionalChargeType.ENABLED_AIR_CONDITIONER;
+import static lv.savchuk.vehicle.rent.enums.AdditionalChargeType.PASSENGER_LIMIT_EXCEEDED;
 import static lv.savchuk.vehicle.rent.enums.FuelType.DIESEL;
 import static lv.savchuk.vehicle.rent.enums.FuelType.PETROL;
 import static lv.savchuk.vehicle.rent.enums.VehicleType.BUS;
@@ -25,8 +27,8 @@ public class HardcodedVehicleRentRateService implements VehicleRentRateService {
 	);
 
 	private final Map<AdditionalChargeType, Float> ADDITIONAL_CHARGE_RATES = Map.of(
-		AdditionalChargeType.ENABLED_AIR_CONDITIONER, 0.2f,
-		AdditionalChargeType.PASSENGER_LIMIT_EXCEEDED, 0.1f
+		ENABLED_AIR_CONDITIONER, 0.2f,
+		PASSENGER_LIMIT_EXCEEDED, 0.1f
 	);
 
 	@Override

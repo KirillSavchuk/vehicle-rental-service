@@ -38,10 +38,10 @@ public class HardcodedGeoLocationService implements GeoLocationService {
 		Objects.requireNonNull(from, format("Service cannot find location by city name: %s.", fromCity));
 
 		final TripLocation to = CITY_TO_TRIP_LOCATION_MAP.get(toCity);
-		Objects.requireNonNull(from, format("Service cannot find location by city name: %s.", toCity));
+		Objects.requireNonNull(to, format("Service cannot find location by city name: %s.", toCity));
 
 		final Map<TripLocation, Float> sourceCityMap = DISTANCE_BETWEEN_MAP.get(from);
-		Objects.requireNonNull(from, format("Service cannot find distance from '%s' city.", fromCity));
+		Objects.requireNonNull(sourceCityMap, format("Service cannot find distance from '%s' city.", fromCity));
 
 		final Float distanceBetweenCities = sourceCityMap.get(to);
 		Objects.requireNonNull(distanceBetweenCities, format("Service cannot find distance from '%s' to '%s' city.", fromCity, toCity));
