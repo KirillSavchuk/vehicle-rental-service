@@ -10,7 +10,7 @@ public abstract class Vehicle {
 	protected VehicleType type;
 	protected String model;
 	protected FuelType fuelType;
-	protected boolean hasAirConditioner;
+	protected boolean isAirConditionerEnabled;
 	protected int maxPassengerCount;
 
 }

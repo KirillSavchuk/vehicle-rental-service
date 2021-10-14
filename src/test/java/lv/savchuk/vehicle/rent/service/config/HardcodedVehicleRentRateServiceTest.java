@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static lv.savchuk.vehicle.rent.enums.AdditionalChargeType.ENABLED_AIR_CONDITIONER;
-import static lv.savchuk.vehicle.rent.enums.AdditionalChargeType.PASSENGER_LIMIT_EXCEEDED;
+import static lv.savchuk.vehicle.rent.enums.AdditionalChargeType.EXTRA_PASSENGER;
 import static lv.savchuk.vehicle.rent.enums.FuelType.DIESEL;
 import static lv.savchuk.vehicle.rent.enums.FuelType.PETROL;
 import static lv.savchuk.vehicle.rent.enums.VehicleType.BUS;
@@ -35,7 +35,7 @@ class HardcodedVehicleRentRateServiceTest {
 
 		assertThat(config.getAdditionalChargeRates()).isNotNull();
 		assertThat(config.getAdditionalChargeRates().get(ENABLED_AIR_CONDITIONER)).isEqualTo(0.2f);
-		assertThat(config.getAdditionalChargeRates().get(PASSENGER_LIMIT_EXCEEDED)).isEqualTo(0.1f);
+		assertThat(config.getAdditionalChargeRates().get(EXTRA_PASSENGER)).isEqualTo(0.1f);
 	}
 
 }
