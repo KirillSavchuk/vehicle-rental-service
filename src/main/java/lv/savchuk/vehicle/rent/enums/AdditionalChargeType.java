@@ -1,4 +1,4 @@
-package lv.savchuk.carrental.enums;
+package lv.savchuk.vehicle.rent.enums;
 
 public enum AdditionalChargeType {
 

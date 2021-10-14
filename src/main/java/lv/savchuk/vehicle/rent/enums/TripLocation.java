@@ -1,8 +1,8 @@
-package lv.savchuk.carrental.enums;
+package lv.savchuk.vehicle.rent.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lv.savchuk.carrental.model.Location;
+import lv.savchuk.vehicle.rent.model.Location;
 
 @Getter
 @RequiredArgsConstructor
