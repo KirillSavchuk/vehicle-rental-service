@@ -1,10 +1,10 @@
 package lv.savchuk.vehicle.rent.model;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class VehicleRentOrder {
 
 	private final Vehicle vehicle;

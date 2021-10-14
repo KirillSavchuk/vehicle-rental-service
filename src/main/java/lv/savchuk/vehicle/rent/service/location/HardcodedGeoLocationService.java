@@ -5,7 +5,6 @@ import lv.savchuk.vehicle.rent.exception.GeoLocationServiceException;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import static java.lang.String.format;

@@ -8,6 +8,8 @@ import lv.savchuk.vehicle.rent.model.*;
 import lv.savchuk.vehicle.rent.service.config.VehicleRentRateService;
 import lv.savchuk.vehicle.rent.service.location.GeoLocationService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
@@ -23,11 +25,11 @@ public class VehicleRentCostService {
 	private final VehicleRentRateService rentRateService;
 	private final GeoLocationService geoLocationService;
 
-	public Float calculateCost(VehicleRentOrder order) throws GeoLocationServiceException, VehicleRentCostException {
+	public BigDecimal calculateCost(VehicleRentOrder order) throws GeoLocationServiceException, VehicleRentCostException {
 		final VehicleRentRateConfig rateConfig = rentRateService.getConfig();
 		final float totalCostPerKM = calculateCostPerKM(rateConfig, order.getVehicle(), order.getPassengerCount());
 		final float totalTripDistance = getTotalTripDistance(order.getTrip());
-		return totalTripDistance * totalCostPerKM;
+		return toPrice(totalTripDistance * totalCostPerKM);
 	}
 
 	private Float calculateCostPerKM(VehicleRentRateConfig rateConfig, Vehicle vehicle, int passengerCount) throws VehicleRentCostException {
@@ -75,6 +77,10 @@ public class VehicleRentCostService {
 			.map(Location::getCity)
 			.collect(toCollection(LinkedList::new));
 		return geoLocationService.getDistanceBetween(cityPath);
+	}
+
+	private BigDecimal toPrice(Float f) {
+		return new BigDecimal(f).setScale(2, RoundingMode.HALF_UP);
 	}
 
 }
