@@ -1,11 +1,12 @@
 package lv.savchuk.vehicle.rent.service.location;
 
 import lv.savchuk.vehicle.rent.enums.TripLocation;
+import lv.savchuk.vehicle.rent.exception.GeoLocationServiceException;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.Objects;
 
 import static java.lang.String.format;
 import static java.util.function.Function.identity;
@@ -20,6 +21,8 @@ public class HardcodedGeoLocationService implements GeoLocationService {
 		return Arrays.stream(TripLocation.values()).collect(toMap(TripLocation::getCity, identity()));
 	}
 
+	// In the real life distance between 2 points are not equal bidirectionally
+	// because distance "from -> to" can be longer due to closed road due to roadworks
 	private static final Map<TripLocation, Map<TripLocation, Float>> DISTANCE_BETWEEN_MAP = Map.copyOf(new HashMap<>() {{
 		put(PRAGUE, Map.of(
 			BRNO, 200f,
@@ -29,24 +32,33 @@ public class HardcodedGeoLocationService implements GeoLocationService {
 			VIENA, 150f,
 			BUDAPEST, 350f
 		));
+		put(BUDAPEST, Map.of(
+			PRAGUE, 550f
+		));
 	}});
 
 
 	@Override
-	public Float getDistanceBetween(String fromCity, String toCity) {
+	public Float getDistanceBetween(String fromCity, String toCity) throws GeoLocationServiceException {
 		final TripLocation from = CITY_TO_TRIP_LOCATION_MAP.get(fromCity);
-		Objects.requireNonNull(from, format("Service cannot find location by city name: %s.", fromCity));
+		throwIfNull(from, format("Service cannot find location by city name: %s.", fromCity));
 
 		final TripLocation to = CITY_TO_TRIP_LOCATION_MAP.get(toCity);
-		Objects.requireNonNull(to, format("Service cannot find location by city name: %s.", toCity));
+		throwIfNull(to, format("Service cannot find location by city name: %s.", toCity));
 
 		final Map<TripLocation, Float> sourceCityMap = DISTANCE_BETWEEN_MAP.get(from);
-		Objects.requireNonNull(sourceCityMap, format("Service cannot find distance from '%s' city.", fromCity));
+		throwIfNull(sourceCityMap, format("Service cannot find distance from '%s' city.", fromCity));
 
 		final Float distanceBetweenCities = sourceCityMap.get(to);
-		Objects.requireNonNull(distanceBetweenCities, format("Service cannot find distance from '%s' to '%s' city.", fromCity, toCity));
+		throwIfNull(distanceBetweenCities, format("Service cannot find distance from '%s' to '%s' city.", fromCity, toCity));
 
 		return distanceBetweenCities;
+	}
+
+	private void throwIfNull(Object nullCheckObject, String exceptionMessage) throws GeoLocationServiceException {
+		if (nullCheckObject == null) {
+			throw new GeoLocationServiceException(exceptionMessage);
+		}
 	}
 
 }
