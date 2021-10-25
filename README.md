@@ -1,4 +1,5 @@
-## Java developer home assignment
+# Java developer home assignment
+
 ### Task
 Assume you are part of a team developing the Vehicle rental application. You are only tasked to
 design/develop a Class which calculates the total expense for a given trip.
